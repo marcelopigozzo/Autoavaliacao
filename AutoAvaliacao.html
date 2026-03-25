@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Avaliação Premium Jéssica</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0a0a0a;
+  color: white;
+}
+
+.hero {
+  background: radial-gradient(circle at top, #ff0080, #0a0a0a);
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.logo {
+  width: 110px;
+}
+
+.hero h1 { color: #ff2d9b; }
+
+.start-btn {
+  margin-top: 20px;
+  padding: 15px;
+  background: linear-gradient(90deg,#ff2d9b,#ff0066);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-weight: bold;
+}
+
+.container {
+  display: none;
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+}
+
+.step { display: none; }
+.step.active { display: block; }
+
+input, select, textarea {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: none;
+  background: #1a1a1a;
+  color: white;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #ff2d9b;
+  border: none;
+  border-radius: 10px;
+}
+
+.panel {
+  margin-top: 20px;
+  padding: 15px;
+  background: #111;
+  border-radius: 10px;
+}
+
+.bar { height: 10px; background: #333; border-radius: 10px; }
+.fill { height: 100%; background: #ff2d9b; width: 0%; }
+
+.resultado {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+
+.score {
+  font-size: 28px;
+  color: #ff2d9b;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+<img src="https://drive.google.com/file/d/1K588XMOwNpQXcQyGFoEW-vc_oS02M6Zj/view?usp=sharing'"
+class="logo">
+
+<h1>🔥 Avaliação Inteligente</h1>
+<p>Descubra exatamente o que está travando seu resultado</p>
+<button class="start-btn" onclick="start()">Começar avaliação</button>
+</div>
+
+<div class="container" id="container">
+
+<form id="form">
+
+<div class="step active">
+<h3>Seus dados</h3>
+<input name="nome" placeholder="Nome completo">
+<input name="altura" placeholder="Altura (cm)">
+<input name="peso" placeholder="Peso (kg)">
+<button type="button" onclick="next()">Continuar</button>
+</div>
+
+<div class="step">
+<h3>Objetivo</h3>
+<select name="objetivo">
+<option>Emagrecimento</option>
+<option>Hipertrofia</option>
+<option>Saúde</option>
+</select>
+<button type="button" onclick="next()">Continuar</button>
+</div>
+
+<div class="step">
+<div class="step">
+
+<h3>⚡ Seu estilo de vida (isso define seus resultados)</h3>
+
+<label>😴 Sono — Quantas horas você dorme por noite?</label>
+<select name="sono_horas">
+<option>Menos de 5h — recuperação muito baixa</option>
+<option>5 a 6h — recuperação limitada</option>
+<option>6 a 7h — razoável, mas pode melhorar</option>
+<option>7 a 8h — ideal para evolução</option>
+<option>Mais de 8h — excelente recuperação</option>
+</select>
+
+<label>💤 Qualidade do sono</label>
+<select name="sono_qualidade">
+<option>Ruim — acordo cansado todos os dias</option>
+<option>Regular — às vezes descanso</option>
+<option>Boa — acordo bem disposto</option>
+</select>
+
+<label>🥗 Alimentação</label>
+<select name="alimentacao">
+<option>Ruim — alimentação desregulada e industrializada</option>
+<option>Regular — oscila entre bom e ruim</option>
+<option>Boa — equilibrada e consistente</option>
+</select>
+
+<label>🍺 Consumo de álcool</label>
+<select name="alcool">
+<option>Frequente — várias vezes por semana</option>
+<option>Social — finais de semana</option>
+<option>Não consumo</option>
+</select>
+
+<label>🧠 Nível de estresse</label>
+<select name="estresse">
+<option>Alto — afeta energia e foco</option>
+<option>Médio — moderado</option>
+<option>Baixo — controlado</option>
+</select>
+
+<p style="font-size:12px; opacity:0.6;">
+👉 Esses fatores impactam diretamente seus resultados físicos e evolução
+</p>
+
+<button type="button" onclick="next()">Continuar</button>
+
+</div>
+
+<div class="step">
+<h3>Expectativa</h3>
+<textarea name="expectativa"></textarea>
+<button type="submit">Finalizar</button>
+</div>
+
+</form>
+
+<div class="panel">
+IMC: <span id="imc">--</span>
+<div class="bar"><div class="fill" id="fill"></div></div>
+</div>
+
+</div>
+
+<div class="resultado" id="resultado">
+
+<h2>📊 Seu Diagnóstico</h2>
+
+<div class="score" id="score"></div>
+
+<p id="diagnostico"></p>
+<p id="alerta"></p>
+
+<div class="bar">
+<div id="potencial" class="fill"></div>
+</div>
+
+<br>
+
+<button onclick="irWhats()">Quero meu plano personalizado</button>
+
+<div style="margin-top:30px; padding:20px; border:1px solid #ff2d9b; border-radius:15px;">
+<h3>🔥 Avaliação Física Completa</h3>
+<p>Medidas + dobras cutâneas + diagnóstico avançado</p>
+<h2>R$ 45,00</h2>
+<button onclick="comprarPix()">Pagar via Pix</button>
+</div>
+
+</div>
+
+<script>
+let current=0;
+let steps=document.querySelectorAll(".step");
+
+function start(){
+document.querySelector(".hero").style.display="none";
+document.getElementById("container").style.display="block";
+}
+
+function next(){
+steps[current].classList.remove("active");
+current++;
+steps[current].classList.add("active");
+}
+
+// IMC
+document.getElementById("form").addEventListener("input",()=>{
+let altura=document.querySelector("[name=altura]").value/100;
+let peso=document.querySelector("[name=peso]").value;
+if(!altura||!peso)return;
+let imc=(peso/(altura*altura)).toFixed(2);
+document.getElementById("imc").innerText=imc;
+document.getElementById("fill").style.width="70%";
+});
+
+// SUBMIT (CORRIGIDO)
+document.getElementById("form").addEventListener("submit",(e)=>{
+e.preventDefault();
+
+let data=new FormData(e.target);
+let obj={};
+data.forEach((v,k)=>obj[k]=v);
+
+let altura=obj.altura/100;
+let peso=obj.peso;
+let imc=(peso/(altura*altura)).toFixed(2);
+
+let score=100;
+
+if(obj.sono_horas.includes("Menos")) score-=25;
+if(obj.sono_qualidade==="Ruim") score-=15;
+if(obj.alimentacao==="Ruim") score-=20;
+if(obj.estresse==="Alto") score-=15;
+if(obj.alcool==="Frequente") score-=10;
+if(imc>25) score-=10;
+
+if(score<0) score=0;
+
+// ENVIA SEM TRAVAR
+fetch("https://script.google.com/macros/s/AKfycbwYO50oSNXyhp_2coNPY--Mhaklp4XWKpLCU7DRDBUZUiGesMPROUJTTLZNa9_BEGWp/exec",{
+method:"POST",
+mode:"no-cors",
+body: JSON.stringify(obj)
+});
+
+// RESULTADO
+let diagnostico="Você está em nível intermediário";
+let alerta="Alguns ajustes podem acelerar seus resultados";
+
+if(score<60){
+diagnostico="Seu corpo precisa de atenção";
+alerta="Seu estilo de vida pode estar travando seus resultados";
+}
+
+document.getElementById("score").innerText="🔥 Score: "+score+"/100";
+document.getElementById("diagnostico").innerText=diagnostico;
+document.getElementById("alerta").innerText=alerta;
+document.getElementById("potencial").style.width=score+"%";
+
+document.getElementById("container").style.display="none";
+document.getElementById("resultado").style.display="block";
+});
+
+// WHATS
+function irWhats(){
+let msg = `Olá Jéssica! Fiz minha avaliação 👇
+
+${document.getElementById("score").innerText}
+
+Quero meu plano personalizado`;
+
+window.location.href="https://wa.me/555193303248?text="+encodeURIComponent(msg);
+}
+
+// PIX
+function comprarPix(){
+let msg = `Olá Jéssica! Quero pagar a avaliação completa de R$45 via Pix`;
+
+window.location.href="https://wa.me/555193303248?text="+encodeURIComponent(msg);
+}
+</script>
+
+</body>
+</html>
